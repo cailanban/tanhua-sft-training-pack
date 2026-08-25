@@ -1,0 +1,10 @@
+{
+  "tanhua_sft_train": {
+    "file_name": "train_sampled_alpaca.jsonl",
+    "columns": {"system": "system", "prompt": "instruction", "response": "output"}
+  },
+  "tanhua_sft_valid": {
+    "file_name": "valid_alpaca.jsonl",
+    "columns": {"system": "system", "prompt": "instruction", "response": "output"}
+  }
+}

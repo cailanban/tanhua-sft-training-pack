@@ -1,0 +1,37 @@
+# LLaMA-Factory QLoRA 配置（共识版 v2：1×H800/A800/A100 80G 主推档）
+# 用法：llamafactory-cli train qlora_27b_a100.yaml
+# 上机纪律：先 10 步 dry-run 验 32K 显存；OOM 则 cutoff_len 回 16384 重启，其余不动。
+model_name_or_path: /root/autodl-tmp/Qwen3-27B   # 换成实际 27B 级 Qwen 权重路径
+trust_remote_code: true
+stage: sft
+do_train: true
+finetuning_type: lora
+lora_rank: 64                 # 27B 级标准配置（勿用 7B 的 16/32）
+lora_alpha: 128
+lora_dropout: 0.05
+lora_target: all              # q/k/v/o + gate/up/down 全加，业务逻辑能力收益明显
+quantization_bit: 4
+quantization_method: bnb
+template: qwen3
+enable_thinking: false        # 关键：金标无 think 块，关闭思考模式避免训出思考习惯
+dataset: tanhua_sft_train
+eval_dataset: tanhua_sft_valid
+dataset_dir: .
+cutoff_len: 32768             # 实测 >32K 字符仅 0.6%，近无损；OOM 回 16384
+preprocessing_num_workers: 16
+overwrite_cache: true
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 8
+gradient_checkpointing: true
+learning_rate: 1.0e-4         # QLoRA 共识值；若前 500 步 eval loss 震荡回 5e-5
+lr_scheduler_type: cosine
+warmup_ratio: 0.1
+num_train_epochs: 2           # 36K 样本 2 epoch 起步；eval 仍下降且三族偏弱可加到 3
+logging_steps: 10
+save_steps: 500
+eval_strategy: steps
+eval_steps: 500
+bf16: true
+flash_attn: fa2
+output_dir: saves/qwen3-27b/qlora-tanhua
+report_to: tensorboard

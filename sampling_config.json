@@ -1,0 +1,52 @@
+{
+ "seed": 20260824,
+ "weights": {
+  "t1": 1.0,
+  "t2": 1.6,
+  "t3": 0.75,
+  "t3d_py": 0.8,
+  "t3d_java": 1.0,
+  "t3e": 1.6,
+  "t4": 1.6
+ },
+ "report": {
+  "t1": {
+   "orig": 5761,
+   "weight": 1.0,
+   "sampled": 5761
+  },
+  "t2": {
+   "orig": 2801,
+   "weight": 1.6,
+   "sampled": 4482
+  },
+  "t3": {
+   "orig": 14286,
+   "weight": 0.75,
+   "sampled": 10714
+  },
+  "t3d_py": {
+   "orig": 8004,
+   "weight": 0.8,
+   "sampled": 6403
+  },
+  "t3d_java": {
+   "orig": 1217,
+   "weight": 1.0,
+   "sampled": 1217
+  },
+  "t3e": {
+   "orig": 1919,
+   "weight": 1.6,
+   "sampled": 3070
+  },
+  "t4": {
+   "orig": 2725,
+   "weight": 1.6,
+   "sampled": 4360
+  }
+ },
+ "train_total": 36007,
+ "valid_total": 3715,
+ "note": "仅 train 加权；valid 保持真实分布。复现：random.Random(seed) 同序采样。"
+}
